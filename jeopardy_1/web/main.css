@@ -1,0 +1,30 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Apr 24, 2015, 8:21:22 AM
+    Author     : dgm1
+*/
+
+#center {
+    width: 50%;
+    margin: 0 auto;
+}
+
+#game {
+    background-color: black;
+}
+
+#game th, #game td {
+    width: 10%;
+    text-align: center;
+    border: 1px solid yellow;
+    background: blue;
+    color: yellow;
+}
+
+#game td {
+    padding: 10px;
+}
