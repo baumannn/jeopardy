@@ -44,9 +44,11 @@
                     <td><%=strclase%></td>
                     <td><button class="editarclase" data-clase="<%=strclase%>">editar</button></td>
                     
-                    <form name="forma" method="POST" action="Controlador?operacion=eliminarClase">
-                        <td><input type="hidden" name="nomClase" value="<%=strclase%>"><input type="submit" name="Submit" value="eliminar"></td>
-                    </form>
+                    <td>
+                        <form name="forma" method="POST" action="Controlador?operacion=eliminarClase">
+                            <input type="hidden" name="nomClase" value="<%=strclase%>"><input type="submit" name="Submit" value="eliminar">
+                        </form>
+                    </td>
                     
                     
                 <td><form name="forma" method="POST" action="Controlador?operacion=usarClase"><input type="hidden" name="nomClase" value="<%=strclase%>"><input type="submit" name="Submit" value="-->" ></button></form></td>
@@ -57,14 +59,16 @@
             <%}%>
             
             
-            <form name="forma" method="POST" action="Controlador?operacion=addClase">
+            
                 <tr>
-                    <td>NUEVO</td>
-                    <td colspan="2"><input name="nomClase" id="nomclasenueva" value="nombre"/> </td>
-                    
-                    <td><input type="submit" name="Submit" value="+"></td>
+                    <td colspan="4">
+                        <form name="forma" method="POST" action="Controlador?operacion=addClase">NUEVO
+                            <input name="nomClase" id="nomclasenueva" value="nombre"/>
+                            <input type="submit" name="Submit" value="+">
+                        </form>
+                    </td>
                 </tr>
-            </form>
+            
             
             </table>
 
