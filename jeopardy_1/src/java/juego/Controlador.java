@@ -150,9 +150,73 @@ public class Controlador extends HttpServlet {
         
         
         if(op.equals("usarClase")){
-            
-            
             String clase = request.getParameter("nomClase");
+            
+            System.out.println(clase);
+            
+            url="/selcategorias.jsp";
+            
+            ArrayList categorias;
+            categorias = DBhandler.getCategorias(clase);
+//            pistas = DBhandler.getPistas();
+            request.setAttribute("clase", clase);
+            request.setAttribute("categorias", categorias);
+//            request.setAttribute("pistas", pistas);
+        }
+        
+        if(op.equals("addCategoria")){
+            String categoria = request.getParameter("nomCategoria");   
+            DBhandler.addCategoria(categoria);
+            
+            url="/selcategorias.jsp";
+            
+            ArrayList clases, pistas, categorias;
+            clases = DBhandler.getClases();
+            categorias = DBhandler.getCategorias();
+            pistas = DBhandler.getPistas();
+            request.setAttribute("clases", clases);
+            request.setAttribute("categorias", categorias);
+            request.setAttribute("pistas", pistas);
+        }
+        
+        
+        
+        if(op.equals("eliminarCategoria")){
+            String categoria = request.getParameter("nomCategoria");
+            DBhandler.deleteCategoria(categoria);
+            
+            url="/selcategorias.jsp";
+            
+            ArrayList clases, pistas, categorias;
+            clases = DBhandler.getClases();
+            categorias = DBhandler.getCategorias();
+            pistas = DBhandler.getPistas();
+            request.setAttribute("clases", clases);
+            request.setAttribute("categorias", categorias);
+            request.setAttribute("pistas", pistas);
+        }
+        
+        
+        if(op.equals("editarCategoria")){
+            String categoria = request.getParameter("nomCategoriaOld");
+            String categoriaNew = request.getParameter("nomCategoriaNew");
+            
+            DBhandler.editCategoria(categoria, categoriaNew);
+            
+            url="/selcategorias.jsp";
+            
+            ArrayList clases, pistas, categorias;
+            clases = DBhandler.getClases();
+            categorias = DBhandler.getCategorias();
+            pistas = DBhandler.getPistas();
+            request.setAttribute("clases", clases);
+            request.setAttribute("categorias", categorias);
+            request.setAttribute("pistas", pistas);
+        }
+        
+        
+        if(op.equals("usarCategoria")){
+            String clase = request.getParameter("nomCategoria");
             
             System.out.println(clase);
             
@@ -169,7 +233,7 @@ public class Controlador extends HttpServlet {
         //forward
         ServletContext sc=this.getServletContext();
         
-            System.out.println(url);
+        System.out.println(url);
         RequestDispatcher rd=sc.getRequestDispatcher(url);
         rd.forward(request, response);
         
