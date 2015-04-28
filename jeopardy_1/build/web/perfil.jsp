@@ -27,73 +27,167 @@
         
         <div id="center">
             
-            <h3>Escoje la clase</h3>
-            
-            <table>
+            <h3 class="selclase">Escoje la clase</h3>
+            <table class="selclase">
             
             <% 
                 ArrayList clases = (ArrayList) request.getAttribute("clases");
-                ArrayList categorias = (ArrayList) request.getAttribute("categorias");
+                ArrayList<Categoria> categorias = (ArrayList) request.getAttribute("categorias");
                 ArrayList pistas = (ArrayList) request.getAttribute("pistas");
-
+                
                 for (int i = 0; i < clases.size(); i++) {
                         String strclase = (String) clases.get(i);
             %>
             
-                
-                <tr data-clase="<%=strclase%>">
+              
+                <tr>
                     
                     <td><%=strclase%></td>
-                    <td><button class="editarclase" data-clase="<%=strclase%>">editar</button></td>
-                    
-                    <td>
-                        <form name="forma" method="POST" action="Controlador?operacion=eliminarClase">
-                            <input type="hidden" name="nomClase" value="<%=strclase%>"><input type="submit" name="Submit" value="eliminar">
-                        </form>
-                    </td>
-                    
-                    
-                <td><form name="forma" method="POST" action="Controlador?operacion=usarClase"><input type="hidden" name="nomClase" value="<%=strclase%>"><input type="submit" name="Submit" value="-->" ></button></form></td>
-                    
+                    <td><button class="usarclase" data-clase="<%=strclase%>">--></button></td>
+                   
                 </tr>
                 
 
             <%}%>
             
+            </table>
             
             
-                <tr>
-                    <td colspan="4">
-                        <form name="forma" method="POST" action="Controlador?operacion=addClase">NUEVO
-                            <input name="nomClase" id="nomclasenueva" value="nombre"/>
-                            <input type="submit" name="Submit" value="+">
-                        </form>
-                    </td>
-                </tr>
+            <h3 class="selcat">Agrega categorias</h3>
+            <span id="nocat" style="display:none">No hay categorias</span>
+            <table class="selcat" id="tabcats">
             
+                <%    for (int i = 0; i < categorias.size(); i++) {
+                            String strcat = categorias.get(i).toString();
+                %>
+
+
+                    <tr  data-categoria="<%=strcat%>" data-clase="<%=categorias.get(i).getTema()%>">
+
+                        <td><%=strcat%></td>
+                        <td><button class="agregarcat" data-categoria="<%=strcat%>" data-clase="<%=categorias.get(i).getTema()%>">+</button></td>
+
+                    </tr>
+
+
+                <%}%>
             
-            </table>             
+            </table>     
+                
+                
+                <h3 class="actcats">Categorias activas:</h3>
+                <div id="actcatsshow" class="actcats"></div>
+                
+                
+                <br>
+                <button id="getpistas"></button>
+                
+                
+                
         </div> 
         <script>
             var clase;
-
+            var cats;
+            var catsarr = [];
             $(document).ready(function() {
-                $(".editarclase").on("click", function(){
-
-                    var fila = $(this).parent().parent();
-                    var newhtmla = '<td colspan="4"><form name="editarclase" method="POST" action="Controlador?operacion=editarClase">';
-
-                    var newhtmlb = 
-                        'nuevo: ' +
-                        '<input type="hidden" name="nomClaseOld" value="'+ fila.data("clase") + '"/>'+
-                        '<input name="nomClaseNew" id="nomclaseeditado" value="'+fila.data("clase")+'"/><input type="submit" name="Submit" value="aceptar">';
-                    var end = '</form></td>';
-//                                console.log(newhtml);
-                    fila.html("");
-                    fila.append(newhtmla + newhtmlb + end);
-
-
+                
+                $(".selcat").hide();
+                $(".actcats").hide();
+                
+                
+                $(".usarclase").on("click", function(){
+                    
+                    cats = "";
+                    catsarr = [];
+                    
+                    clase = $(this).data("clase");
+                    
+                    $(".selcat").show();
+                    $("#nocat").hide();
+                    $(".actcats").hide();
+                    
+                    var cnt = 0;
+                    
+                    $("#tabcats tr").hide().each(function(index){
+                        if($(this).data("clase") == clase){
+                            $(this).show();
+                            cnt++;
+                        }
+                    });
+                    
+                    if(cnt == 0) {
+                        $("#nocat").show();
+                    }
+                    
                 });
+                
+                
+                $(".agregarcat").on("click", function(){
+                    
+                    $(".actcats").show();
+                    
+                    
+                    catsarr[catsarr.length] = $(this).data("categoria");
+                    
+                    cats = "<table>";
+                    
+                    for(var i = 0; i < catsarr.length; i++){
+                        
+                        cats +=
+                            "<tr class='actcats'  >" +
+                                "<td>" +
+                                    catsarr[i] +
+                                "</td>" +
+                                "<td>" +
+                                    "<button class='elimcat' data-num='" + i + "' > eliminar</button>" +
+                                "</td>" +
+                            "</tr>";
+                            
+                    }
+                    
+                    cats += "<table>";
+                    
+                    $("#actcatsshow").html(cats);
+                   
+                });
+                
+                
+                $(document).on("click", ".elimcat", function(){
+                   catsarr.splice(parseInt($(this).data("num")), 1);
+                   
+                   
+                   cats = "<table>";
+                    
+                    for(var i = 0; i < catsarr.length; i++){
+                        
+                        cats +=
+                            "<tr class='actcats' >" +
+                                "<td>" +
+                                    catsarr[i] +
+                                "</td>" +
+                                "<td>" +
+                                    "<button class='elimcat'  data-num='" + i + "'> eliminar</button>" +
+                                "</td>" +
+                            "</tr>";
+                            
+                    }
+                    
+                    cats += "<table>";
+                    
+                    $("#actcatsshow").html(cats);
+                    
+                    if($("#actcatsshow tr").length == 0) {
+                        $(".actcats").hide();
+                    }
+                   
+                });
+                
+                
+                
+                
+                
+                
+                
             });
         </script>
     </body>

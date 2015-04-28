@@ -196,31 +196,21 @@ public class DBhandler {
     }
     
     
-    public static void addClase(String s){
-        
+    public static void addClase(String s){ 
         try {
-            
-            
-            System.out.println("se agrego " + s);
-            
             Statement statement = connection.createStatement();
-            
             statement.executeUpdate("INSERT INTO clases (clase) VALUES ('" + s + "')");
         } catch (SQLException ex){
                         Logger.getLogger(DBhandler.class.getName()).log(Level.SEVERE, null, ex);
-
         }
     }
     
     public static void deleteClase(String s) {
-        
         try {
             Statement statement = connection.createStatement();
             statement.executeUpdate("DELETE FROM clases WHERE clase='" + s + "'");
-            
         } catch (SQLException ex){
                         Logger.getLogger(DBhandler.class.getName()).log(Level.SEVERE, null, ex);
-
         }
     }
     
@@ -228,49 +218,62 @@ public class DBhandler {
         try {
             Statement statement = connection.createStatement();
             statement.executeUpdate("UPDATE clases SET clase='" + nw +"' WHERE clase='" + s + "'");
-            
         } catch (SQLException ex){
                         Logger.getLogger(DBhandler.class.getName()).log(Level.SEVERE, null, ex);
-
         }
     }
     
     public static void addCategoria(String s, String c){  
         try {
-            System.out.println("se agrego " + s);
-            
             Statement statement = connection.createStatement();
-            
             statement.executeUpdate("INSERT INTO categorias (categoria, clase) VALUES ('" + s + "', '" + c + "')");
         } catch (SQLException ex){
                         Logger.getLogger(DBhandler.class.getName()).log(Level.SEVERE, null, ex);
-
         }
     }
     
     public static void deleteCategoria(String s) {
-        
         try {
             Statement statement = connection.createStatement();
             statement.executeUpdate("DELETE FROM categorias WHERE categoria='" + s + "'");
-            
         } catch (SQLException ex){
                         Logger.getLogger(DBhandler.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
-    public static void editCategoria(String s, String nw) {
-        
-        
-        System.out.println("se edito " + s + " a " + nw);
-        
+    public static void editCategoria(String s, String nw, String nc) {
         try {
             Statement statement = connection.createStatement();
-            statement.executeUpdate("UPDATE categorias SET categoria='" + nw +"' WHERE categoria='" + s + "'");
-            
+            statement.executeUpdate("UPDATE categorias SET categoria='" + nw +"', clase='"+nc+"' WHERE categoria='" + s + "'");
         } catch (SQLException ex){
                         Logger.getLogger(DBhandler.class.getName()).log(Level.SEVERE, null, ex);
-
+        }
+    }
+    
+    public static void addPista(String p, String r, String valor, String categoria) {
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("INSERT INTO pistas (pista, respuesta, valor, categoria) VALUES ('" + p + "', '" + r + "', " + valor + ", '" + categoria + "')");
+        } catch (SQLException ex){
+                        Logger.getLogger(DBhandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static void deletePista(String p) {
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("DELETE FROM pistas WHERE pista='" + p + "'");
+        } catch (SQLException ex){
+                        Logger.getLogger(DBhandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static void editPista(String pOld, String pNew, String rOld, String rNew, String vOld, String vNew, String cOld, String cNew) {
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("UPDATE pistas SET pista='" + pNew +"', respuesta='" + rNew+"', valor="+vNew+", categoria='"+cNew+"' WHERE pista='" + pOld + "'");
+        } catch (SQLException ex){
+                        Logger.getLogger(DBhandler.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

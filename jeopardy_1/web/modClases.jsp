@@ -10,6 +10,9 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script src="js/jquery-1.11.1.js"></script>
+        <script src="js/main.js"></script>
+        <link rel="stylesheet" type="textcss" href="main.css">
         <title>JSP Page</title>
     </head>
     <body>
@@ -20,20 +23,19 @@
         
         <div id="center">
             
-            <h3>Escoje la clase</h3>
+            <h3>Modifica la clase</h3>
             
             <table>
-            
+            <th>Clase</th>
+            <th>Editar</th>
+            <th>Eliminar</th>
             <% 
                 ArrayList clases = (ArrayList) request.getAttribute("clases");
 
                 for (int i = 0; i < clases.size(); i++) {
                         String strclase = (String) clases.get(i);
             %>
-            
-                
                 <tr data-clase="<%=strclase%>">
-                    
                     <td><%=strclase%></td>
                     <td><button class="editarclase" data-clase="<%=strclase%>">editar</button></td>
                     
@@ -42,28 +44,20 @@
                             <input type="hidden" name="nomClase" value="<%=strclase%>"><input type="submit" name="Submit" value="eliminar">
                         </form>
                     </td>
-                    
-                    
-                <td><form name="forma" method="POST" action="Controlador?operacion=usarClase"><input type="hidden" name="nomClase" value="<%=strclase%>"></form></td>
-                    
                 </tr>
-                
-
             <%}%>
-            
-            
-            
                 <tr>
                     <td colspan="4">
-                        <form name="forma" method="POST" action="Controlador?operacion=addClase">NUEVO
-                            <input name="nomClase" id="nomclasenueva" value="nombre"/>
+                        <form name="forma" method="POST" action="Controlador?operacion=addClase">Crear
+                            <input name="nomClase" id="nomclasenueva" placeholder="nombre"/>
                             <input type="submit" name="Submit" value="+">
                         </form>
                     </td>
                 </tr>
-            
-            
-            </table>             
+            </table>
+                <form method="GET" action="inicio.jsp">
+                    <input type="submit" value="Menu">
+                </form>
         </div> 
         <script>
             var clase;
