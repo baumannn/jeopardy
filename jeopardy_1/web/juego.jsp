@@ -119,7 +119,7 @@
                         
                         
                         
-                        <!--<form method="POST" action="Controlador?operacion=ganarpuntos" id="formsubmit">  <input type="hidden" name="ganador"/> <input type="hidden" name="puntos"/></form>-->
+                        <form method="POST" action="Controlador?operacion=ganarpuntos" id="formsubmit">  </form>
                         
     </body>
     
@@ -215,6 +215,8 @@
                 
                 var str = "";
                 
+                var hstr = "";
+                
                 for(var i = 0; i < resultadosarr.length; i++){
                     
                     if(i == 0)
@@ -225,6 +227,28 @@
                 }
                 
                 alert(str);
+                
+                var strj = "";
+                var strpts = "";
+                
+                for(var i = 0; i < jugadoresarr.length; i++){
+                    
+                    if(i==0){
+                        strj += jugadoresarr[i];
+                        strpts += resultadosarr[i];
+                    }
+                    else{
+                        strj += ", " + jugadoresarr[i];
+                        strpts += ", " + resultadosarr[i];
+                    }
+                }
+                
+                
+                hstr += "<input type='hidden' name='jugadores' value='" + strj + "'/>";
+                hstr += "<input type='hidden' name='resultados' value='" + strpts + "'/>";
+                
+                
+                $("#formsubmit").html(hstr).submit();
                 
             });
             
