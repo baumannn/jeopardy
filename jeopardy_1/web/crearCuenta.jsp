@@ -13,9 +13,10 @@
     </head>
     <body>
         <h1>Sign up!</h1>
-        <form method="GET" action="Controlador?operacion=crearCuenta">
+        <form method="POST" action="Controlador?operacion=crearCuenta">
             Ingresa el nombre de tu cuenta: <input type="text" name="nombre" placeholder="Nombre de cuenta"><br>
             Ingresa tu cuenta de correos: <input type="text" name="correo" placeholder="Cuenta de correos"><br>
+            <input type="submit" value="Entrar">
         </form>
     </body>
 </html>

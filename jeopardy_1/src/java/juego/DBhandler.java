@@ -91,6 +91,30 @@ public class DBhandler {
         return valido;
     }
     
+    public static int getCheck(String usuario) {
+        int ret = 0;
+        try {
+        Statement statement = connection.createStatement();
+        ResultSet results = statement.executeQuery("SELECT * FROM usuarios WHERE users='"+usuario+"'");
+        results.next();
+        ret = Integer.parseInt(results.getString(3));
+        System.out.println(ret);
+        } catch (SQLException ex){
+                        Logger.getLogger(DBhandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return ret;
+    }
+    
+    public static void addUsuario(String nombre, String pass) {
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("INSERT INTO usuarios (users, passwords, login) VALUES ('" + nombre + "', '"+pass+"', 0)");
+            statement.close();
+        } catch (SQLException ex){
+                        Logger.getLogger(DBhandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     
     public static boolean getCambio(User usuario, String password) {
         //ArrayList list = new ArrayList();
@@ -102,7 +126,7 @@ public class DBhandler {
             String pass = usuario.getPassword();
             String pass2 = password;
             
-            statement.executeUpdate("UPDATE usuarios SET passwords='"+pass2+"' WHERE users='"+us+"' AND passwords='"+pass+"'");
+            statement.executeUpdate("UPDATE usuarios SET passwords='"+pass2+"', login=1 WHERE users='"+us+"' AND passwords='"+pass+"'");
             valido=true;
             
             statement.close();

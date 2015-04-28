@@ -5,8 +5,10 @@
  */
 package juego;
 
+import com.sun.mail.smtp.SMTPMessage;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.*;
 import java.util.ArrayList;
 import java.util.Properties;
 import java.util.UUID;
@@ -17,8 +19,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
 import javax.mail.*;
+import javax.mail.internet.*;
+import javax.activation.*;
 
 /**
  *
@@ -50,61 +53,36 @@ public class Controlador extends HttpServlet {
             valido = DBhandler.getLogin(usuario);
             
             if(valido){
-                url="/inicio.jsp";
-                HttpSession session = request.getSession();
-                session.setAttribute("usuario", usuario);
+                if(DBhandler.getCheck(user) == 1) {
+                    url="/inicio.jsp";
+                    HttpSession session = request.getSession();
+                    session.setAttribute("usuario", usuario);
+                }
+                else {
+                    HttpSession session = request.getSession();
+                    session.setAttribute("usuario", usuario);
+                    url="/cambiarPass.jsp";
+                }
             }
             else
                 url="/login.jsp";
         }
         
         if(op.equals("crearCuenta")) {
-            String to = request.getParameter("nombre");
-            String correo = request.getParameter("correo");
+            String nombre = request.getParameter("nombre");
+            String to = request.getParameter("correo");
             
-            String password = UUID.randomUUID().toString();
+            String password = UUID.randomUUID().toString().substring(0,15);
+            System.out.println(nombre + password);
+            url = "/inscrito.jsp";
             
-            String from = "dgarza.m93@gmail.com";
-
-            // Assuming you are sending email from localhost
-            String host = "localhost";
-
-            // Get system properties
-            Properties properties = System.getProperties();
-
-            // Setup mail server
-            properties.setProperty("mail.smtp.host", host);
-
-            // Get the default Session object.
-            Session session = Session.getDefaultInstance(properties);
-
-            try{
-               // Create a default MimeMessage object.
-               MimeMessage message = new MimeMessage(session);
-
-               // Set From: header field of the header.
-               message.setFrom(new InternetAddress(from));
-
-               // Set To: header field of the header.
-               message.addRecipient(Message.RecipientType.TO,
-                                        new InternetAddress(to));
-
-               // Set Subject: header field
-               message.setSubject("This is the Subject Line!");
-
-               // Now set the actual message
-               message.setText("This is actual message");
-
-               // Send message
-               Transport.send(message);
-               System.out.println("Sent message successfully....");
-            }catch (MessagingException mex) {
-               mex.printStackTrace();
-            }
+            DBhandler.addUsuario(nombre, password);
+            request.setAttribute("nombre", nombre);
+            request.setAttribute("password", password);
         }
         
+        
         if(op.equals("cambiar")){
-
             HttpSession session = request.getSession();
             String passNueva = request.getParameter("pN");
             //User uno= new User();
