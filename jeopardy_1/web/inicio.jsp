@@ -14,7 +14,7 @@
 <center>
 <br/><br/>
 
-<h1>MENU MENU MENU</h1>
+<h1>MENU</h1>
 
 <a href="cambiarPass.jsp">Cambiar password</a><br><br>
 <a href="Controlador?operacion=iniciarJuego">Comenzar juego</a><br><br>

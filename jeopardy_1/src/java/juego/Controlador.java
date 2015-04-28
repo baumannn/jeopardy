@@ -83,13 +83,13 @@ public class Controlador extends HttpServlet {
             url="/login.jsp";
             Cookie[] cookies = request.getCookies();
             for (int i=0; i<cookies.length; i++)
-                {
-                    Cookie cookie = cookies[i];
-                    cookie.setMaxAge(0); //delete the cookie
-                    cookie.setPath("/");
-                              //allow the entire application to access it
-                    response.addCookie(cookie);
-             }
+            {
+                Cookie cookie = cookies[i];
+                cookie.setMaxAge(0); //delete the cookie
+                cookie.setPath("/");
+                          //allow the entire application to access it
+                response.addCookie(cookie);
+            }
             HttpSession session = request.getSession();
             session.invalidate();
         }

@@ -151,7 +151,7 @@ public class DBhandler {
     public static void addUsuario(String nombre, String pass) {
         try {
             Statement statement = connection.createStatement();
-            statement.executeUpdate("INSERT INTO usuarios (users, passwords, login) VALUES ('" + nombre + "', '"+pass+"', 0)");
+            statement.executeUpdate("INSERT INTO usuarios (users, passwords, login, intentos) VALUES ('" + nombre + "', '"+pass+"', 0, 0)");
             statement.close();
         } catch (SQLException ex){
                         Logger.getLogger(DBhandler.class.getName()).log(Level.SEVERE, null, ex);
