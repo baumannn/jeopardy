@@ -81,87 +81,57 @@ public class Controlador extends HttpServlet {
         }
         if(op.equals("iniciarJuego")){
             url="/perfil.jsp";
-            ArrayList clases, pistas, categorias;
+            ArrayList clases;
             clases = DBhandler.getClases();
-            categorias = DBhandler.getCategorias();
-            pistas = DBhandler.getPistas();
             request.setAttribute("clases", clases);
-            request.setAttribute("categorias", categorias);
-            request.setAttribute("pistas", pistas);
         }
         
         if(op.equals("addClase")){
-            
-            
             String clase = request.getParameter("nomClase");
-            
             DBhandler.addClase(clase);
-            
             url="/perfil.jsp";
             
-            ArrayList clases, pistas, categorias;
+            ArrayList clases;
             clases = DBhandler.getClases();
-            categorias = DBhandler.getCategorias();
-            pistas = DBhandler.getPistas();
             request.setAttribute("clases", clases);
-            request.setAttribute("categorias", categorias);
-            request.setAttribute("pistas", pistas);
         }
         
         
         
         if(op.equals("eliminarClase")){
-            
-            
             String clase = request.getParameter("nomClase");
-            
             DBhandler.deleteClase(clase);
-            
             url="/perfil.jsp";
             
-            ArrayList clases, pistas, categorias;
+            ArrayList clases;
             clases = DBhandler.getClases();
-            categorias = DBhandler.getCategorias();
-            pistas = DBhandler.getPistas();
             request.setAttribute("clases", clases);
-            request.setAttribute("categorias", categorias);
-            request.setAttribute("pistas", pistas);
         }
         
         
         if(op.equals("editarClase")){
-            
-            
             String clase = request.getParameter("nomClaseOld");
             String clasenew = request.getParameter("nomClaseNew");
-            
             DBhandler.editClase(clase, clasenew);
-            
             url="/perfil.jsp";
             
-            ArrayList clases, pistas, categorias;
+            ArrayList clases;
             clases = DBhandler.getClases();
-            categorias = DBhandler.getCategorias();
-            pistas = DBhandler.getPistas();
             request.setAttribute("clases", clases);
-            request.setAttribute("categorias", categorias);
-            request.setAttribute("pistas", pistas);
         }
         
         
         if(op.equals("usarClase")){
             String clase = request.getParameter("nomClase");
-            
-            System.out.println(clase);
-            
             url="/selcategorias.jsp";
             
             ArrayList categorias;
+            Perfil perfil = new Perfil();
+            perfil.setClase(clase);
             categorias = DBhandler.getCategorias(clase);
-//            pistas = DBhandler.getPistas();
             request.setAttribute("clase", clase);
             request.setAttribute("categorias", categorias);
-//            request.setAttribute("pistas", pistas);
+            request.setAttribute("perfil", perfil);
         }
         
         if(op.equals("addCategoria")){

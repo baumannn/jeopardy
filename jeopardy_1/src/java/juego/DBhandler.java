@@ -217,7 +217,6 @@ public class DBhandler {
             
         } catch (SQLException ex){
                         Logger.getLogger(DBhandler.class.getName()).log(Level.SEVERE, null, ex);
-
         }
     }
     

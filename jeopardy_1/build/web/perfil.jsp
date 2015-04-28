@@ -70,77 +70,34 @@
                 </tr>
             
             
-            </table>
+            </table>             
+        </div> 
+        <script>
+            var clase;
 
-            
-            
-<!--            
-            
-            
-            
-            
-            
-            <form method="post" action='CrearPerfil'>
-                <h3>Escoje la clase</h3>
-                <% 
-                    clases = (ArrayList) request.getAttribute("clases");
+            $(document).ready(function() {
+                $(".editarclase").on("click", function(){
 
-                    for (int i = 0; i < clases.size(); i++) {
-                            String tema = (String) clases.get(i);
-                %>
-                <input type="radio" value="<%=tema%>" name="tema" onClick="mostrarCategoria()"> <%=tema%></input>
-                    <%}%>
-                    <br><br>
-                    
-                    <button id="addclass">Agregar clase</button>
-                    
-                    <br><br>
-                    <input type="submit" value='Continuar'>
-            </form>
-                    -->
-                    
-                    
-                    
-                    
-                    
-        </div>
-                    
-                    
-                    
-                    <script>
-                        
-                        
-                        var clase;
-                        
-                        $(document).ready(function() {
-                            
-                            
-                           
-                            
-                            
-                            
-                            $(".editarclase").on("click", function(){
-                             
-                                var fila = $(this).parent().parent();
-                                var newhtmla = '<td colspan="4"><form name="editarclase" method="POST" action="Controlador?operacion=editarClase">';
-                            
-                                var newhtmlb = 
-                                    'nuevo: ' +
-                                    '<input type="hidden" name="nomClaseOld" value="'+ fila.data("clase") + '"/>'+
-                                    '<input name="nomClaseNew" id="nomclaseeditado" value="'+fila.data("clase")+'"/><input type="submit" name="Submit" value="aceptar">';
+                    var fila = $(this).parent().parent();
+                    var newhtmla = '<td colspan="4"><form name="editarclase" method="POST" action="Controlador?operacion=editarClase">';
 
-                                var end = '</form></td>';
+                    var newhtmlb = 
+                        'nuevo: ' +
+                        '<input type="hidden" name="nomClaseOld" value="'+ fila.data("clase") + '"/>'+
+                        '<input name="nomClaseNew" id="nomclaseeditado" value="'+fila.data("clase")+'"/><input type="submit" name="Submit" value="aceptar">';
+
+                    var end = '</form></td>';
 //                                console.log(newhtml);
-                                fila.html("");
-                                fila.append(newhtmla + newhtmlb + end);
-                                
-                              
-                            });
-                            
-                        });
-                        
-                        
-                        
-                    </script>
+                    fila.html("");
+                    fila.append(newhtmla + newhtmlb + end);
+
+
+                });
+
+            });
+
+
+
+        </script>
     </body>
 </html>
