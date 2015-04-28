@@ -91,14 +91,29 @@ public class DBhandler {
         return valido;
     }
     
+    public static int agregarIntento(String usuario) {
+        int intentos = 0;
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet results = statement.executeQuery("SELECT intentos FROM usuarios WHERE users='"+usuario+"'");
+            results.next();
+            intentos = Integer.parseInt(results.getString(1))+1;
+            statement.executeUpdate("UPDATE usuarios SET intentos='"+intentos+"' WHERE users='"+usuario+"'");
+            statement.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBhandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return intentos;
+    }
+    
     public static int getCheck(String usuario) {
         int ret = 0;
         try {
-        Statement statement = connection.createStatement();
-        ResultSet results = statement.executeQuery("SELECT * FROM usuarios WHERE users='"+usuario+"'");
-        results.next();
-        ret = Integer.parseInt(results.getString(3));
-        System.out.println(ret);
+            Statement statement = connection.createStatement();
+            ResultSet results = statement.executeQuery("SELECT * FROM usuarios WHERE users='"+usuario+"'");
+            results.next();
+            ret = Integer.parseInt(results.getString(3));
+            System.out.println(ret);
         } catch (SQLException ex){
                         Logger.getLogger(DBhandler.class.getName()).log(Level.SEVERE, null, ex);
         }

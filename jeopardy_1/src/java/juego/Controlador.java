@@ -64,8 +64,12 @@ public class Controlador extends HttpServlet {
                     url="/cambiarPass.jsp";
                 }
             }
-            else
-                url="/login.jsp";
+            else{
+                HttpSession session = request.getSession();
+                int intentos = DBhandler.agregarIntento(user);
+                session.setAttribute("intentos", intentos);
+                url="/login.jsp"; 
+            }
         }
         
         if(op.equals("crearCuenta")) {

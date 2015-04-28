@@ -29,7 +29,8 @@ SET time_zone = "+00:00";
 CREATE TABLE IF NOT EXISTS `usuarios` (
   `users` varchar(30) NOT NULL,
   `passwords` varchar(30) NOT NULL,
-  `login` int(10) NOT NULL
+  `login` int(10) NOT NULL,
+  `intentos` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE IF NOT EXISTS `clases` (
@@ -52,9 +53,9 @@ CREATE TABLE IF NOT EXISTS `pistas` (
 -- Dumping data for table `usuarios`
 --
 
-INSERT INTO `usuarios` (`users`, `passwords`, `login`) VALUES
-('Pablo', 'pablo', '0'),
-('prueba1', '1111', '1');
+INSERT INTO `usuarios` (`users`, `passwords`, `login`, `intentos`) VALUES
+('Pablo', 'pablo', '0', '0'),
+('prueba1', '1111', '1', '0');
 
 INSERT INTO `clases` (`clase`) VALUES
 ('Matematicas'),

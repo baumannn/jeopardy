@@ -13,7 +13,14 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Login</title>
     </head>
-    <body>
+    <body id="center">
+        <%
+            if(request.getSession(false) == null){
+                int in = (int) session.getAttribute("intentos");
+                if(in!=0){
+        %>
+        <p>Llevas <%=in%> intentos.</p>
+        <%}}%>
         <h1>¡Bienvenido!</h1>    
         <form name="forma" method="POST" action="Controlador?operacion=login">        
             User: <input type="text" name="user"><br/>
