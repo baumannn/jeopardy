@@ -125,6 +125,7 @@ public class Controlador extends HttpServlet {
             String clase = request.getParameter("nomClase");
             url="/selcategorias.jsp";
             
+<<<<<<< Updated upstream
             ArrayList categorias;
             Perfil perfil = new Perfil();
             perfil.setClase(clase);
@@ -132,11 +133,20 @@ public class Controlador extends HttpServlet {
             request.setAttribute("clase", clase);
             request.setAttribute("categorias", categorias);
             request.setAttribute("perfil", perfil);
+=======
+            ArrayList categorias, pistas;
+            categorias = DBhandler.getCategorias(clase);
+            pistas = DBhandler.getPistas();
+            request.setAttribute("clase", clase);
+            request.setAttribute("categorias", categorias);
+            request.setAttribute("pistas", pistas);
+>>>>>>> Stashed changes
         }
         
         if(op.equals("addCategoria")){
             String categoria = request.getParameter("nomCategoria");   
-            DBhandler.addCategoria(categoria);
+            String clase = request.getParameter("claseCategoria");   
+            DBhandler.addCategoria(categoria, clase);
             
             url="/selcategorias.jsp";
             

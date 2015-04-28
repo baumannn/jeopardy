@@ -22,6 +22,49 @@ public class DBhandler {
         }
     }
     
+    
+    public static boolean exQuery(String s) {
+        
+        
+        boolean valido = false;
+        try {
+            Statement statement = connection.createStatement();
+            
+            
+            ResultSet results = statement.executeQuery(s);
+            if (results.next()) { 
+                valido=true;
+            } else {
+                
+            }
+            statement.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBhandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return valido;
+        
+        
+    }
+    
+    public static boolean exUpdate(String s) {
+      
+        boolean valido = false;
+        try {
+            Statement statement = connection.createStatement();
+            
+            statement.executeUpdate(s);
+            valido=true;
+            
+            statement.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBhandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return valido;
+        
+    }
+    
+    
+    
     public static boolean getLogin(User usuario) {
         //ArrayList list = new ArrayList();
         
@@ -196,13 +239,13 @@ public class DBhandler {
         }
     }
     
-    public static void addCategoria(String s){  
+    public static void addCategoria(String s, String c){  
         try {
             System.out.println("se agrego " + s);
             
             Statement statement = connection.createStatement();
             
-            statement.executeUpdate("INSERT INTO categorias (categorias) VALUES ('" + s + "')");
+            statement.executeUpdate("INSERT INTO categorias (categoria, clase) VALUES ('" + s + "', '" + c + "')");
         } catch (SQLException ex){
                         Logger.getLogger(DBhandler.class.getName()).log(Level.SEVERE, null, ex);
 

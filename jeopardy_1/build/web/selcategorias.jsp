@@ -52,7 +52,7 @@
                 <form name="forma" method="POST" action="Controlador?operacion=addCategoria">
                 <tr>
                     <td>NUEVO</td>
-                    <td colspan="2"><input name="nomCategoria" id="nomcategorianueva" value="nombre"/> </td>
+                    <td colspan="2"><input type="hidden" name="claseCategoria" value="<%=request.getAttribute("clase")%>"/><input name="nomCategoria" id="nomcategorianueva" value="nombre"/> </td>
                     
                     <td><input type="submit" name="Submit" value="+"></td>
                 </tr>
