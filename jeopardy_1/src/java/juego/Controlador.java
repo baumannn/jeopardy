@@ -137,59 +137,58 @@ public class Controlador extends HttpServlet {
         if(op.equals("addCategoria")){
             String categoria = request.getParameter("nomCategoria");   
             String clase = request.getParameter("claseCategoria");   
+            Perfil perfil = (Perfil) request.getAttribute("perfil");
             DBhandler.addCategoria(categoria, clase);
             
             url="/selcategorias.jsp";
             
-            ArrayList clases, pistas, categorias;
+            ArrayList clases, categorias;
             clases = DBhandler.getClases();
             categorias = DBhandler.getCategorias();
-            pistas = DBhandler.getPistas();
             request.setAttribute("clases", clases);
             request.setAttribute("categorias", categorias);
-            request.setAttribute("pistas", pistas);
+            request.setAttribute("perfil", perfil);
         }
         
         
         
         if(op.equals("eliminarCategoria")){
             String categoria = request.getParameter("nomCategoria");
+            Perfil perfil = (Perfil) request.getAttribute("perfil");
             DBhandler.deleteCategoria(categoria);
             
             url="/selcategorias.jsp";
             
-            ArrayList clases, pistas, categorias;
+            ArrayList clases, categorias;
             clases = DBhandler.getClases();
             categorias = DBhandler.getCategorias();
-            pistas = DBhandler.getPistas();
             request.setAttribute("clases", clases);
             request.setAttribute("categorias", categorias);
-            request.setAttribute("pistas", pistas);
+            request.setAttribute("perfil", perfil);
         }
         
         
         if(op.equals("editarCategoria")){
             String categoria = request.getParameter("nomCategoriaOld");
             String categoriaNew = request.getParameter("nomCategoriaNew");
+            Perfil perfil = (Perfil) request.getAttribute("perfil");
             
             DBhandler.editCategoria(categoria, categoriaNew);
             
             url="/selcategorias.jsp";
             
-            ArrayList clases, pistas, categorias;
+            ArrayList clases, categorias;
             clases = DBhandler.getClases();
             categorias = DBhandler.getCategorias();
-            pistas = DBhandler.getPistas();
             request.setAttribute("clases", clases);
             request.setAttribute("categorias", categorias);
-            request.setAttribute("pistas", pistas);
+            request.setAttribute("perfil", perfil);
         }
         
         
         if(op.equals("usarCategoria")){
             String clase = request.getParameter("nomCategoria");
-            
-            System.out.println(clase);
+            Perfil perfil = (Perfil) request.getAttribute("perfil");
             
             url="/selcategorias.jsp";
             
@@ -198,6 +197,7 @@ public class Controlador extends HttpServlet {
 //            pistas = DBhandler.getPistas();
             request.setAttribute("clase", clase);
             request.setAttribute("categorias", categorias);
+            request.setAttribute("perfil", perfil);
 //            request.setAttribute("pistas", pistas);
         }
         

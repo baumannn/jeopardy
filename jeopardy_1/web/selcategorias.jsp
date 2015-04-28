@@ -4,6 +4,7 @@
     Author     : baumann
 --%>
 
+<%@page import="juego.Perfil"%>
 <%@page import="java.sql.*"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -29,6 +30,8 @@
             <table>
                 <%
                     ArrayList categorias = (ArrayList) request.getAttribute("categorias");
+                    Perfil perfil = (Perfil) request.getAttribute("perfil");
+                    request.setAttribute("perfil", perfil);
                     for(int i = 0; i < categorias.size(); i++) {        
                         String strcat = categorias.get(i).toString();  
                     %>
