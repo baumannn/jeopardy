@@ -25,6 +25,10 @@ and open the template in the editor.
     color: yellow;
 }
 
+td {
+    text-align: center;
+}
+
 #game td {
     padding: 10px;
 }
