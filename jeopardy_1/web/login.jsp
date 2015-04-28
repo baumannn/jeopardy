@@ -24,8 +24,9 @@
             <input type="submit" name="Submit" value="Login">
             <input type="reset" value="Reset">      
         </form>
+        @//TODO crear cuenta
         <form method="GET" action="crearCuenta.jsp">
-            <input type="submit" name="Submit" value="Login">
+            <input type="submit" name="Submit" value="Crear">
         </form>
     </body>
 </html>
