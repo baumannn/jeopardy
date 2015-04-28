@@ -158,6 +158,28 @@ public class DBhandler {
         }
     }
     
+    public static void agregarPuntos(String usuario, String jugadores, String resultados) {
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet results = statement.executeQuery("SELECT COUNT(juego) FROM juegos");
+            results.next();
+            int juego = Integer.parseInt(results.getString(1))+1;
+            statement.close();
+            Statement statement2 = connection.createStatement();
+            statement2.executeUpdate("INSERT INTO juegos (juego, usuario) VALUES ('" + juego + "', '"+usuario+"')");
+            statement2.close();
+            String [] j = jugadores.split(", ");
+            String [] r = resultados.split(", ");
+            for(int i=0; i<j.length; i++){
+                Statement statement3 = connection.createStatement();
+                statement3.executeUpdate("INSERT INTO equipos (nombre, puntos, juego) VALUES ('" + j[i] + "', "+r[i]+", "+juego+")");
+                statement3.close();
+            }
+        } catch (SQLException ex){
+                        Logger.getLogger(DBhandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     
     public static boolean getCambio(User usuario, String password) {
         //ArrayList list = new ArrayList();

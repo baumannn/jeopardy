@@ -94,6 +94,22 @@ public class Controlador extends HttpServlet {
             session.invalidate();
         }
         
+        if(op.equals("ganarpuntos")) {
+            url = "/inicio.jsp";
+            String jugadores = request.getParameter("jugadores");
+            String resultados = request.getParameter("resultados");
+            Cookie[] cookies = request.getCookies(); 
+            String cookieName = "userIdCookie";
+            String cookieValue = "";
+            for (int i=0; i<cookies.length; i++)
+            {
+                Cookie cookie = cookies[i];
+                if (cookieName.equals(cookie.getName()))
+                    cookieValue = cookie.getValue();
+            }
+            DBhandler.agregarPuntos(cookieValue, jugadores, resultados);
+        }
+        
         if(op.equals("verJuegos")) {
             Cookie[] cookies = request.getCookies(); 
             String cookieName = "userIdCookie";

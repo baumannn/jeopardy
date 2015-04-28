@@ -11,60 +11,251 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" type="textcss" href="main.css">
         <title>Jeopardy | Juego</title>
+        <script src="js/jquery-1.11.1.js"></script>
+        <script src="js/main.js"></script>
     </head>
     <body>
+        
+        <% 
+               
+                
+                String clase = request.getParameter("clase");
+                String categoria = request.getParameter("categorias");
+                String pista = request.getParameter("pistas");
+                String jugador = request.getParameter("jugadores");
+                
+                
+                String[] jugadores = jugador.split(", ");
+                
+                String[] cats = categoria.split(", ");
+                String[] pistas = pista.split("&");
+                String[][] pistasss = new String[pistas.length][]; 
+                
+                
+            %>
+        
         <div id="center">
             <table id="game">
                 <tr id="category">
-                    <th id="category1">The Dinosaurs</th>
-                    <th id="category2">Notable Women</th>
-                    <th id="category3">Oxford Dictionary</th>
-                    <th id="category4">Name that Instrument</th>
-                    <th id="category5">Belgium</th>
-                    <th id="category6">Composers by country</th>
+                    
+                    
+                    <%
+                    for(int i = 0; i < cats.length; i++){ %>
+                      
+                      <th id="category<%=i%>"><%=cats[i]%></th>  
+                        
+                    <%
+                    }
+                    
+                    for(int i = 0; i < pistas.length; i++){
+                        pistasss[i] = pistas[i].split("@");
+                    
+                    
+                    %>
+                         <tr id="level<%=i%>">
+                
+                        <%
+                    }
+                        for(int i = 0; i < pistas.length; i++){
+                        for(int j = 0; j < pistasss[i].length; j++){
+                            
+                            
+
+                        %>
+
+                        <td id="category<%=j%>-<%=i%>"><button   data-pista='<%=pistasss[j][i].split("%")[0]%>'  data-respuesta='<%=pistasss[j][i].split("%")[1]%>'  data-puntos="<%=pistasss[j][i].split("%")[2]%>"  class="selpregunta"><%=pistasss[j][i].split("%")[2]%></button></td>
+                             
+
+                        <%
+
+                        }
+                        %>
+                
+                
+                
+                
+                        </tr>
+                         
+                        
+                     <%   
+                    }
+                    %>
+                    
+                    
+                    
                 </tr>
-                <br>
-                <tr id="leve1">
-                    <td id="category1-1">$200</td>
-                    <td id="category2-1">$200</td>
-                    <td id="category3-1">$200</td>
-                    <td id="category4-1">$200</td>
-                    <td id="category5-1">$200</td>
-                    <td id="category6-1">$200</td>
-                </tr>
-                <tr id="leve2">
-                    <td id="category1-2">$400</td>
-                    <td id="category2-2">$400</td>
-                    <td id="category3-2">$400</td>
-                    <td id="category4-2">$400</td>
-                    <td id="category5-2">$400</td>
-                    <td id="category6-2">$400</td>
-                </tr>
-                <tr id="leve3">
-                    <td id="category1-3">$600</td>
-                    <td id="category2-3">$600</td>
-                    <td id="category3-3">$600</td>
-                    <td id="category4-3">$600</td>
-                    <td id="category5-3">$600</td>
-                    <td id="category6-3">$600</td>
-                </tr>
-                <tr id="leve4">
-                    <td id="category1-4">$800</td>
-                    <td id="category2-4">$800</td>
-                    <td id="category3-4">$800</td>
-                    <td id="category4-4">$800</td>
-                    <td id="category5-4">$800</td>
-                    <td id="category6-4">$800</td>
-                </tr>
-                <tr id="leve5">
-                    <td id="category1-5">$1000</td>
-                    <td id="category2-5">$1000</td>
-                    <td id="category3-5">$1000</td>
-                    <td id="category4-5">$1000</td>
-                    <td id="category5-5">$1000</td>
-                    <td id="category6-5">$1000</td>
-                </tr>
+                
             </table>
+                    
+                    
+                    
+                    <br>
+                    
+                    <div id="activo"><span id="spuntos"></span><br><span id="spista"></span><br> <span id="srespuesta"></span><br>
+                        
+                        <button id="mostrarresp">mostrar respuesta</button>
+                    
+                     <select id="ganador">
+                         
+                         <%   for(int i = 0; i < jugadores.length; i++) {%>
+                         
+                        <option data-num="<%=i%>" value="<%=jugadores[i]%>"><%=jugadores[i]%></option>
+                        
+                        <%}%>
+                        
+                     </select> <button id="ganar">Seleccionar ganador</button>
+                    
+                    
+                    
+                    
+                    </div>
+                        
+                        
+                        
+                        <br>
+                        <button id="terminar">Terminar</button>
         </div>
+                    
+                        
+                        
+                        
+                        <form method="POST" action="Controlador?operacion=ganarpuntos" id="formsubmit">  </form>
+                        
     </body>
+    
+    
+    
+    
+    
+    <script>
+        
+        
+        var puntos;
+        var pista;
+        var respuesta;
+        
+        var obj;
+        
+        var jugadoresarr = [];
+        var resultadosarr = [];
+        
+        $(document).ready(function() {
+            
+            
+            
+            $("#activo").hide();
+            
+            
+            
+            $("#ganador option" ).each(function(index){
+                jugadoresarr[index] = $(this).val();
+                resultadosarr[index] = 0;
+            });
+            
+            
+            $(".selpregunta").on("click", function(){
+                pista = $(this).data("pista");
+                
+                puntos = $(this).data("puntos");
+                
+                respuesta = $(this).data("respuesta");
+                obj = $(this);
+                
+                
+                $("#activo").show();
+                
+                $("#srespuesta").html("Respuesta: " + respuesta).hide();
+                
+                
+                
+                $("#spuntos").html("Puntos: " + puntos);
+                $("#spista").html("Pista: " + pista);
+                
+                
+            });
+            
+            $("#ganar").on("click", function(){
+                
+                var pos = parseInt($("#ganador").find(":selected").data("num"));
+                
+                obj.parent().html(puntos);
+                $("#activo").hide();
+                
+                alert($("#ganador").val() +" gano " + puntos + " puntos!");
+                
+                resultadosarr[pos] += parseInt(puntos);
+                
+                $("#formsubmit").children().each(function(index){
+                    
+                    switch(index){
+                            
+                            case 0:
+                                $(this).val($("#ganador").val());
+                                break;
+                            case 1:
+                                $(this).val(puntos);
+                                break;
+                                
+                            default:
+                                break;
+                            
+                        }
+                    
+                }).submit();
+                
+            });
+            
+            $("#mostrarresp").on("click", function(){
+                
+                $("#srespuesta").show();
+            });
+            
+            
+            $("#terminar").on("click", function(){
+                
+                var str = "";
+                
+                var hstr = "";
+                
+                for(var i = 0; i < resultadosarr.length; i++){
+                    
+                    if(i == 0)
+                        str+= jugadoresarr[i] + ": " + resultadosarr[i]+ " puntos";
+                    else
+                        str+= ", " + jugadoresarr[i] + ": " + resultadosarr[i];
+                    
+                }
+                
+                alert(str);
+                
+                var strj = "";
+                var strpts = "";
+                
+                for(var i = 0; i < jugadoresarr.length; i++){
+                    
+                    if(i==0){
+                        strj += jugadoresarr[i];
+                        strpts += resultadosarr[i];
+                    }
+                    else{
+                        strj += ", " + jugadoresarr[i];
+                        strpts += ", " + resultadosarr[i];
+                    }
+                }
+                
+                
+                hstr += "<input type='hidden' name='jugadores' value='" + strj + "'/>";
+                hstr += "<input type='hidden' name='resultados' value='" + strpts + "'/>";
+                
+                
+                $("#formsubmit").html(hstr).submit();
+                
+            });
+            
+            
+            
+            
+        })
+        
+    </script>
 </html>
