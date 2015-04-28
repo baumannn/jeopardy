@@ -91,6 +91,34 @@ public class DBhandler {
         return valido;
     }
     
+    public static ArrayList getJuegos() {
+        ArrayList juegos = new ArrayList();
+        try {
+            Statement statement = connection.createStatement();
+            Statement statement2 = connection.createStatement();
+            ResultSet results = statement.executeQuery("SELECT * FROM juegos");
+            while(results.next()){
+                int j = Integer.parseInt(results.getString(1));
+                ResultSet results2 = statement2.executeQuery("SELECT * FROM equipos WHERE juego="+results.getString(1)+"");
+                Juego juego = new Juego();
+                ArrayList equipos = new ArrayList();
+                juego.setNombre(j);
+                while(results2.next()) {
+                    Equipo equipo = new Equipo();
+                    equipo.setNombre(results2.getString(1));
+                    equipo.setPuntuaje(Integer.parseInt(results2.getString(2)));
+                    equipos.add(equipo);
+                }
+                juego.setEquipos(equipos);
+                juegos.add(juego);
+            }
+            statement.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBhandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return juegos;
+    }
+    
     public static int agregarIntento(String usuario) {
         int intentos = 0;
         try {

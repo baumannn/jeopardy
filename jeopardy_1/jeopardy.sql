@@ -49,6 +49,16 @@ CREATE TABLE IF NOT EXISTS `pistas` (
   `categoria` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+CREATE TABLE IF NOT EXISTS `juegos` (
+  `juego` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE IF NOT EXISTS `equipos` (
+  `nombre` varchar(30) NOT NULL,
+  `puntos` int(10) NOT NULL,
+  `juego` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 --
 -- Dumping data for table `usuarios`
 --
@@ -60,6 +70,18 @@ INSERT INTO `usuarios` (`users`, `passwords`, `login`, `intentos`) VALUES
 INSERT INTO `clases` (`clase`) VALUES
 ('Matematicas'),
 ('Fisica');
+
+INSERT INTO `juegos` (`juego`) VALUES
+(1),
+(2);
+
+INSERT INTO `equipos` (`nombre`, `puntos`, `juego`) VALUES
+('Los juanitos', 1000, 1),
+('Los juanitos', 2000, 2),
+('Los matadores', 500, 1),
+('Los enanos', 3000, 1),
+('Los hermanos', 4000, 1),
+('Los matadores', 100000, 2);
 
 INSERT INTO `categorias` (`categoria`, `clase`) VALUES
 ('Geometria', 'Matematicas'),
@@ -89,6 +111,10 @@ ALTER TABLE `usuarios`
  ADD PRIMARY KEY (`categoria`);
  ALTER TABLE `pistas`
  ADD PRIMARY KEY (`pista`);
+ ALTER TABLE `juegos`
+ ADD PRIMARY KEY (`juego`);
+ALTER TABLE `equipos`
+ ADD PRIMARY KEY (`nombre`, `juego`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

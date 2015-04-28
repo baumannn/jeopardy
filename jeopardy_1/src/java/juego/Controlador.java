@@ -22,6 +22,7 @@ import javax.servlet.http.HttpSession;
 import javax.mail.*;
 import javax.mail.internet.*;
 import javax.activation.*;
+import javax.servlet.http.Cookie;
 
 /**
  *
@@ -57,6 +58,12 @@ public class Controlador extends HttpServlet {
                     url="/inicio.jsp";
                     HttpSession session = request.getSession();
                     session.setAttribute("usuario", usuario);
+                    Cookie userIdCookie = new Cookie("userIdCookie", user);
+                    userIdCookie.setMaxAge(60*60*24*365*2);
+                                                     //set the age to 2 years
+                    userIdCookie.setPath("/");
+                                    // allow access by the entire application
+                    response.addCookie(userIdCookie);
                 }
                 else {
                     HttpSession session = request.getSession();
@@ -68,8 +75,23 @@ public class Controlador extends HttpServlet {
                 HttpSession session = request.getSession();
                 int intentos = DBhandler.agregarIntento(user);
                 session.setAttribute("intentos", intentos);
+                Cookie[] cookies = request.getCookies();
+                for (int i=0; i<cookies.length; i++)
+                    {
+                        Cookie cookie = cookies[i];
+                        cookie.setMaxAge(0); //delete the cookie
+                        cookie.setPath("/");
+                                  //allow the entire application to access it
+                        response.addCookie(cookie);
+                 }
                 url="/login.jsp"; 
             }
+        }
+        
+        if(op.equals("verJuegos")) {
+            ArrayList juegos = DBhandler.getJuegos();
+            request.setAttribute("juegos", juegos);
+            url="/verJuegos.jsp";
         }
         
         if(op.equals("crearCuenta")) {
