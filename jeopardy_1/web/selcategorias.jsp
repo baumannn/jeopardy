@@ -26,35 +26,60 @@
             
             <h3>Agrega una categoria</h3>
             
-            <!--<table>-->
+            <table>
                 <%
-                    
-                    
                     ArrayList categorias = (ArrayList) request.getAttribute("categorias");
-                    
-                    for(int i = 0; i < categorias.size(); i++) {
-                        
-                        String strcat = categorias.get(i).toString();
-                        
+                    for(int i = 0; i < categorias.size(); i++) {        
+                        String strcat = categorias.get(i).toString();  
                     %>
                     
-                    <div><%=strcat%></div>
+                    <tr data-categoria="<%=strcat%>">
                     
+                    <td><%=strcat%></td>
+                    <td><button class="editarcategoria" data-categoria="<%=strcat%>">editar</button></td>
+                    
+                    <form name="forma" method="POST" action="Controlador?operacion=eliminarCategoria">
+                        <td><input type="hidden" name="nomCategoria" value="<%=strcat%>"><input type="submit" name="Submit" value="eliminar"></td>
+                    </form>
+                    
+                    
+                <td><form name="forma" method="POST" action="Controlador?operacion=usarCategoria"><input type="hidden" name="nomCategoria" value="<%=strcat%>"><input type="submit" name="Submit" value="-->" ></button></form></td>
+                    
+                </tr>
                     
                     <%}%>
                 
-                
-                
-                
-                
-            <!--</table>-->
+                <form name="forma" method="POST" action="Controlador?operacion=addCategoria">
+                <tr>
+                    <td>NUEVO</td>
+                    <td colspan="2"><input name="nomCategoria" id="nomcategorianueva" value="nombre"/> </td>
+                    
+                    <td><input type="submit" name="Submit" value="+"></td>
+                </tr>
+                </form>                 
+            </table>
             
-            
-            
-            
+            <script>
+                var categoria;
+
+                $(document).ready(function() {
+                    $(".editarcategoria").on("click", function(){
+
+                        var fila = $(this).parent().parent();
+                        var newhtmla = '<td colspan="4"><form name="editarcategoria" method="POST" action="Controlador?operacion=editarCategoria">';
+
+                        var newhtmlb = 
+                            'nuevo: ' +
+                            '<input type="hidden" name="nomCategoriaOld" value="'+ fila.data("categoria") + '"/>'+
+                            '<input name="nomCategoriaNew" id="nomcategoriaeditado" value="'+fila.data("categoria")+'"/><input type="submit" name="Submit" value="aceptar">';
+
+                        var end = '</form></td>';
+//                                console.log(newhtml);
+                        fila.html("");
+                        fila.append(newhtmla + newhtmlb + end);
+                    });                  
+                });      
+            </script>    
         </div>
-        
-        
-        
     </body>
 </html>

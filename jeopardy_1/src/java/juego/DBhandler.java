@@ -89,24 +89,19 @@ public class DBhandler {
     
     
     public static ArrayList getPistas(){
-        
-        
-            System.out.println("entra3");
+        System.out.println("entra3");
             
         ArrayList pistas = new ArrayList();
         try{
             Statement statement = connection.createStatement();
             
-            ResultSet resultsC = statement.executeQuery("SELECT * FROM categorias");
+            ResultSet resultsC = statement.executeQuery("SELECT * FROM categorias JOIN pistas ON categorias.categoria = pistas.categoria");
             while (resultsC.next()) {
-                ResultSet resultsP = statement.executeQuery("SELECT * FROM pistas WHERE categoria='"+resultsC.getString(1)+"'");
-                while(resultsP.next()){
-                    Pista aux = new Pista(resultsC.getString(1),resultsP.getString(1),resultsP.getString(2),resultsP.getInt(3));
+                    Pista aux = new Pista(resultsC.getString(1),resultsC.getString(2),resultsC.getString(3),resultsC.getInt(4));
                     
                     System.out.println(aux.getPista());
                     
                     pistas.add(aux);
-                }
             }
             statement.close();
         } catch (SQLException ex) {
@@ -178,7 +173,6 @@ public class DBhandler {
         }
     }
     
-    
     public static void deleteClase(String s) {
         
         try {
@@ -192,10 +186,6 @@ public class DBhandler {
     }
     
     public static void editClase(String s, String nw) {
-        
-        
-            System.out.println("se edito " + s + " a " + nw);
-        
         try {
             Statement statement = connection.createStatement();
             statement.executeUpdate("UPDATE clases SET clase='" + nw +"' WHERE clase='" + s + "'");
@@ -206,5 +196,43 @@ public class DBhandler {
         }
     }
     
+    public static void addCategoria(String s){  
+        try {
+            System.out.println("se agrego " + s);
+            
+            Statement statement = connection.createStatement();
+            
+            statement.executeUpdate("INSERT INTO categorias (categorias) VALUES ('" + s + "')");
+        } catch (SQLException ex){
+                        Logger.getLogger(DBhandler.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+    }
     
+    public static void deleteCategoria(String s) {
+        
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("DELETE FROM categorias WHERE categoria='" + s + "'");
+            
+        } catch (SQLException ex){
+                        Logger.getLogger(DBhandler.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+    }
+    
+    public static void editCategoria(String s, String nw) {
+        
+        
+        System.out.println("se edito " + s + " a " + nw);
+        
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("UPDATE categorias SET categoria='" + nw +"' WHERE categoria='" + s + "'");
+            
+        } catch (SQLException ex){
+                        Logger.getLogger(DBhandler.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+    }
 }
