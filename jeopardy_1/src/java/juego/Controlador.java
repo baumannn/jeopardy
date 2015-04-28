@@ -103,9 +103,14 @@ public class Controlador extends HttpServlet {
         
         if(op.equals("iniciarJuego")){
             url="/perfil.jsp";
-            ArrayList clases;
+            ArrayList clases, pistas, categorias;
             clases = DBhandler.getClases();
+            categorias = DBhandler.getCategorias();
+            pistas = DBhandler.getPistas();
+            
             request.setAttribute("clases", clases);
+            request.setAttribute("categorias", categorias);
+            request.setAttribute("pistas", pistas);
         }
         
         if(op.equals("addClase")){
@@ -209,15 +214,19 @@ public class Controlador extends HttpServlet {
         
         
         if(op.equals("usarCategoria")){
-            String clase = request.getParameter("nomCategoria");
+            String cat = request.getParameter("nomCategoria");
             Perfil perfil = (Perfil) request.getAttribute("perfil");
+            
+            System.out.println(perfil.getClase());
+            
+            perfil.addCategoria(cat);
             
             url="/selcategorias.jsp";
             
             ArrayList categorias;
-            categorias = DBhandler.getCategorias(clase);
+            categorias = DBhandler.getCategorias(perfil.getClase());
 //            pistas = DBhandler.getPistas();
-            request.setAttribute("clase", clase);
+            request.setAttribute("clase", perfil.getClase());
             request.setAttribute("categorias", categorias);
             request.setAttribute("perfil", perfil);
 //            request.setAttribute("pistas", pistas);

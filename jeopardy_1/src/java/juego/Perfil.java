@@ -52,5 +52,11 @@ public class Perfil {
         this.pistas = pistas;
     }
     
+    public void addCategoria(String s){
+        
+        this.categorias.add(s);
+        
+    }
+    
     
 }
