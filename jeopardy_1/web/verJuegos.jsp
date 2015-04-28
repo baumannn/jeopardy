@@ -29,11 +29,11 @@
                 <table>
                     <th>Equipo</th>
                     <th>Puntuaje</th>
-                        <%
-                        for(int j=0; j<equipos.size(); j++) {
-                            Equipo equipo = (Equipo) equipos.get(j);
-                            String strEquipo = equipo.getNombre();
-                            int strPuntuaje = equipo.getPuntuaje();
+            <%
+                for(int j=0; j<equipos.size(); j++) {
+                    Equipo equipo = (Equipo) equipos.get(j);
+                    String strEquipo = equipo.getNombre();
+                    int strPuntuaje = equipo.getPuntuaje();
             %>
                 <tr>
                     <td><%=strEquipo%></td>

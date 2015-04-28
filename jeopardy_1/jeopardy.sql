@@ -50,7 +50,8 @@ CREATE TABLE IF NOT EXISTS `pistas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE IF NOT EXISTS `juegos` (
-  `juego` int(10) NOT NULL
+  `juego` int(10) NOT NULL,
+  `usuario` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE IF NOT EXISTS `equipos` (
@@ -71,9 +72,9 @@ INSERT INTO `clases` (`clase`) VALUES
 ('Matematicas'),
 ('Fisica');
 
-INSERT INTO `juegos` (`juego`) VALUES
-(1),
-(2);
+INSERT INTO `juegos` (`juego`,`usuario`) VALUES
+(1, 'Pablo'),
+(2, 'Pablo');
 
 INSERT INTO `equipos` (`nombre`, `puntos`, `juego`) VALUES
 ('Los juanitos', 1000, 1),

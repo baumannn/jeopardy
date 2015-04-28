@@ -22,6 +22,7 @@
 <a href="Controlador?operacion=modCategorias">Modificar categorias</a><br><br>
 <a href="Controlador?operacion=modPistas">Modificar pistas</a><br><br>
 <a href="Controlador?operacion=verJuegos">Ver juegos</a><br><br>
+<a href="Controlador?operacion=logout">Logout</a><br><br>
 
 
 

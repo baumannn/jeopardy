@@ -91,12 +91,12 @@ public class DBhandler {
         return valido;
     }
     
-    public static ArrayList getJuegos() {
+    public static ArrayList getJuegos(String usuario) {
         ArrayList juegos = new ArrayList();
         try {
             Statement statement = connection.createStatement();
             Statement statement2 = connection.createStatement();
-            ResultSet results = statement.executeQuery("SELECT * FROM juegos");
+            ResultSet results = statement.executeQuery("SELECT * FROM juegos WHERE usuario='"+usuario+"'");
             while(results.next()){
                 int j = Integer.parseInt(results.getString(1));
                 ResultSet results2 = statement2.executeQuery("SELECT * FROM equipos WHERE juego="+results.getString(1)+"");
