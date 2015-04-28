@@ -85,8 +85,6 @@
                         'nuevo: ' +
                         '<input type="hidden" name="nomClaseOld" value="'+ fila.data("clase") + '"/>'+
                         '<input name="nomClaseNew" id="nomclaseeditado" value="'+fila.data("clase")+'"/><input type="submit" name="Submit" value="aceptar">';
-
-<<<<<<< Updated upstream
                     var end = '</form></td>';
 //                                console.log(newhtml);
                     fila.html("");
@@ -96,25 +94,6 @@
                 });
 
             });
-
-
-
         </script>
-=======
-                                var end = '</form></td>';
-                                
-                                
-                                fila.html("");
-                                fila.append(newhtmla + newhtmlb + end);
-                                
-                              
-                            });
-                            
-                        });
-                        
-                        
-                        
-                    </script>
->>>>>>> Stashed changes
     </body>
 </html>
