@@ -35,7 +35,6 @@
                 ArrayList<Categoria> categorias = (ArrayList) request.getAttribute("categorias");
                 ArrayList pistas = (ArrayList) request.getAttribute("pistas");
                 
-
                 for (int i = 0; i < clases.size(); i++) {
                         String strclase = (String) clases.get(i);
             %>
@@ -90,7 +89,6 @@
             var clase;
             var cats;
             var catsarr = [];
-
             $(document).ready(function() {
                 
                 $(".selcat").hide();
