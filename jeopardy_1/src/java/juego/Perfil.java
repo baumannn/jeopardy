@@ -13,18 +13,18 @@ import java.util.ArrayList;
  */
 public class Perfil {
     private String clase;
-    private String categoria;
+    private ArrayList categorias;
     private ArrayList pistas;
 
-    public Perfil(String clase, String categoria, ArrayList pistas) {
+    public Perfil(String clase, ArrayList categorias, ArrayList pistas) {
         this.clase = clase;
-        this.categoria = categoria;
+        this.categorias = categorias;
         this.pistas = pistas;
     }
     
     public Perfil() {
         this.clase = "";
-        this.categoria = "";
+        this.categorias = new ArrayList();
         this.pistas = new ArrayList();
     }
 
@@ -36,12 +36,12 @@ public class Perfil {
         this.clase = clase;
     }
 
-    public String getCategoria() {
-        return categoria;
+    public ArrayList getCategorias() {
+        return categorias;
     }
 
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
+    public void setCategorias(ArrayList categorias) {
+        this.categorias = categorias;
     }
 
     public ArrayList getPistas() {
