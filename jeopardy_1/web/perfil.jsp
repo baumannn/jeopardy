@@ -27,13 +27,19 @@
         
         <div id="center">
             
+            
+            <span class="pickedinfo" ><b>Clase: </b></span> <span id="pickedclase" class="pickedinfo"></span>
+            <br class="pickedinfo">
+            <span class="pickedinfo"><b>Categorías: </b></span> <span id="pickedcat" class="pickedinfo"></span>
+            
+            
             <h3 class="selclase">Escoje la clase</h3>
             <table class="selclase">
             
             <% 
                 ArrayList clases = (ArrayList) request.getAttribute("clases");
                 ArrayList<Categoria> categorias = (ArrayList) request.getAttribute("categorias");
-                ArrayList pistas = (ArrayList) request.getAttribute("pistas");
+                ArrayList<Pista> pistas = (ArrayList) request.getAttribute("pistas");
                 
                 for (int i = 0; i < clases.size(); i++) {
                         String strclase = (String) clases.get(i);
@@ -75,12 +81,52 @@
             </table>     
                 
                 
-                <h3 class="actcats">Categorias activas:</h3>
-                <div id="actcatsshow" class="actcats"></div>
+            <h3 class="actcats">Categorias activas:</h3>
+            <div id="actcatsshow" class="actcats"></div>
+
+
+            <br>
+            <button id="getpistas">Siguiente -></button>
+
                 
                 
-                <br>
-                <button id="getpistas"></button>
+            
+            <div id="preguntas">
+                
+                <% for(int i = 0; i < 5; i++){  %>
+
+                <h3 id="t<%=i%>"><span class="ttl"></span> (<span class="ttlnum"></span>)</h3>
+                    <table class="p<%=i%>">
+                        
+                        <%for (int j = 0; j < pistas.size(); j++) {
+                            String pista = pistas.get(j).getPista();
+                            String respuesta = pistas.get(j).getRespuesta();
+                            String valor = "" + pistas.get(j).getValor();
+                            String str = pista + "|" + respuesta + "|" + valor;
+                        %>
+                        
+                            <tr data-cat="<%=pistas.get(j).getCategoria()%>">
+                                
+                                <td><%=pista%></td>
+                                <td><%=respuesta%></td>
+                                <td><%=valor%></td>
+                                <td><button class="addpista" data-num="<%=i%>" data-val="<%=valor%>" data-string="<%=str%>">+</button></td>
+                                
+                                
+                            </tr>
+                           
+                        <% } %>
+                        
+                    </table>
+
+                <% } %>
+                
+            </div>
+                
+                <span id="epicstring"></span>
+                
+                
+                
                 
                 
                 
@@ -89,10 +135,21 @@
             var clase;
             var cats;
             var catsarr = [];
+            
+            var parr0 = [];
+            var parr1 = [];
+            var parr2 = [];
+            var parr3 = [];
+            var parr4 = [];
+            
             $(document).ready(function() {
                 
+                
+                $(".pickedinfo").hide();
                 $(".selcat").hide();
                 $(".actcats").hide();
+                $("#getpistas").hide();
+                $("#preguntas").hide();
                 
                 
                 $(".usarclase").on("click", function(){
@@ -123,6 +180,12 @@
                 
                 
                 $(".agregarcat").on("click", function(){
+                    
+                    
+                    if(catsarr.length >= 4) {
+                        $(".agregarcat").hide();
+                        $("#getpistas").show();
+                    }
                     
                     $(".actcats").show();
                     
@@ -179,11 +242,168 @@
                     if($("#actcatsshow tr").length == 0) {
                         $(".actcats").hide();
                     }
+                    
+                    $(".agregarcat").show();
+                    $("#getpistas").hide();
                    
                 });
                 
                 
+                $("#getpistas").on("click",function(){
+                    $(".selclase").hide();
+                    $(".selcat").hide();
+                    $(".actcats").hide();
+                    $("#getpistas").hide();
+                    
+                    var catsout = "";
+                    
+                    for(var i = 0; i < catsarr.length; i++){
+                        
+                        if(catsout == ""){
+                            catsout += catsarr[i] ;
+                        } else {
+                            catsout += ", " + catsarr[i] ;
+                        }
+                    }
+                    
+                    $("#pickedclase").html(clase);
+                    $("#pickedcat").html(catsout);
+                    
+                    $(".pickedinfo").show();
+                    
+                    $("#preguntas").show();
+                    
+                    for(var i = 0; i < 5; i++){
+                        
+                        $("#t"+ i + " .ttl").html(catsarr[i]);
+                        $("#t"+ i + " .ttlnum").html("0");
+                        
+                        
+                        $("#preguntas .p" + i + " tr").each(function(index){
+                            
+                            
+                            if($(this).data("cat") == catsarr[i]){
+                                $(this).show();
+                            }
+                            else {
+                                $(this).hide();
+                            }
+                        });
+                    }
+                });
                 
+                
+                
+                $(document).on("click", ".addpista", function(){
+                    
+                    var str = $(this).data("string");
+                    var pos = 0;
+
+                    switch($(this).data("num")){
+                       
+                        case 0:
+                            pos = parr0.length;
+                            parr0[parr0.length] = str;
+                            break;  
+                        case 1:
+                            pos = parr1.length;
+                            parr1[parr1.length] = str;
+                            break;  
+                        case 2:
+                            pos = parr2.length;
+                            parr2[parr2.length] = str;
+                            break;  
+                        case 3:
+                            pos = parr3.length;
+                            parr3[parr3.length] = str;
+                            break;  
+                        case 4:
+                            pos = parr4.length;
+                            parr4[parr4.length] = str;
+                            break;
+                        default:
+                            break;
+                        
+                    }
+                    
+                    $(this).parent().html("<button class='rempista' data-pos='" + pos + "' data-num='" + $(this).data("num") + "' data-val='" + $(this).data("val") + "' data-string='" + str + "'>eliminar</button>");
+                    updatePistas();
+                    
+                });
+                
+                
+                $(document).on("click", ".rempista", function(){
+                    
+                    
+                    var pos = parseInt($(this).data("pos"));
+                        
+                    switch($(this).data("num")){
+                        
+
+                        case 0:
+                            parr0.splice(pos, 1);
+                            break;  
+                        case 1:
+                            parr1.splice(pos, 1);
+                            break;  
+                        case 2:
+                            parr2.splice(pos, 1);
+                            break;  
+                        case 3:
+                            parr3.splice(pos, 1);
+                            break;  
+                        case 4:
+                            parr4.splice(pos, 1);
+                            break;
+                        default:
+                            break;
+                        
+                    }
+                    
+                    $(this).parent().html("<button class='addpista' data-num='" + $(this).data("num") + "' data-val='" + $(this).data("val") + "' data-string='" + $(this).data("string") + "'>+</button>");
+                    updatePistas();
+                    
+                
+                });
+                
+                
+                function updatePistas(){
+                    $("#t0 .ttlnum").html("" + parr0.length);
+                    $("#t1 .ttlnum").html("" + parr1.length);
+                    $("#t2 .ttlnum").html("" + parr2.length);
+                    $("#t3 .ttlnum").html("" + parr3.length);
+                    $("#t4 .ttlnum").html("" + parr4.length);
+                    
+                    
+                    var es = "";
+                    
+                    for(var i = 0; i < parr0.length; i++){
+                        es+=parr0[i] + "@";
+                    }
+                    
+                    for(var i = 0; i < parr1.length; i++){
+                        es+=parr1[i] + "@";
+                    }
+                    
+                    for(var i = 0; i < parr2.length; i++){
+                        es+=parr2[i] + "@";
+                    }
+                    
+                    for(var i = 0; i < parr3.length; i++){
+                        es+=parr3[i] + "@";
+                    }
+                    
+                    for(var i = 0; i < parr4.length; i++){
+                        es+=parr4[i] + "@";
+                    }
+                    
+                    
+                    
+                    
+                    
+                    
+                    $("#epicstring").html(es);
+                }
                 
                 
                 
