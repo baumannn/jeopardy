@@ -24,6 +24,8 @@
         <%@ page import="juego.Pista" %>
         
         
+        
+        
       
         <div id="center">
             

@@ -33,6 +33,8 @@
             
             <% 
                 ArrayList clases = (ArrayList) request.getAttribute("clases");
+                ArrayList categorias = (ArrayList) request.getAttribute("categorias");
+                ArrayList pistas = (ArrayList) request.getAttribute("pistas");
 
                 for (int i = 0; i < clases.size(); i++) {
                         String strclase = (String) clases.get(i);

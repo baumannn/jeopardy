@@ -81,9 +81,14 @@ public class Controlador extends HttpServlet {
         }
         if(op.equals("iniciarJuego")){
             url="/perfil.jsp";
-            ArrayList clases;
+            ArrayList clases, pistas, categorias;
             clases = DBhandler.getClases();
+            categorias = DBhandler.getCategorias();
+            pistas = DBhandler.getPistas();
+            
             request.setAttribute("clases", clases);
+            request.setAttribute("categorias", categorias);
+            request.setAttribute("pistas", pistas);
         }
         
         if(op.equals("addClase")){
