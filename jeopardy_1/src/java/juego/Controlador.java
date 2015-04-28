@@ -79,6 +79,28 @@ public class Controlador extends HttpServlet {
                 url="/cambiarPass.jsp";
     
         }
+        
+        if(op.equals("modClases")){
+            url="/modClases.jsp";
+            ArrayList clases;
+            clases = DBhandler.getClases();
+            request.setAttribute("clases", clases);
+        }
+        
+        if(op.equals("modCategorias")){
+            url="/modCategorias.jsp";
+            ArrayList categorias;
+            categorias = DBhandler.getCategorias();
+            request.setAttribute("categorias", categorias);
+        }
+        
+        if(op.equals("modPistas")){
+            url="/modPistas.jsp";
+            ArrayList pistas;
+            pistas = DBhandler.getPistas();
+            request.setAttribute("pistas", pistas);
+        }
+        
         if(op.equals("iniciarJuego")){
             url="/perfil.jsp";
             ArrayList clases;

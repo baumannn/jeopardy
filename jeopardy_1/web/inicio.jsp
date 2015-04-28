@@ -16,8 +16,12 @@
 
 <h1>MENU MENU MENU</h1>
 
-<a href="cambiarPass.jsp">cambiar password</a>
-<a href="Controlador?operacion=iniciarJuego">Comenzar juego</a>
+<a href="cambiarPass.jsp">Cambiar password</a><br>
+<a href="Controlador?operacion=iniciarJuego">Comenzar juego</a><br>
+<a href="Controlador?operacion=modClases">Modificar clases</a><br>
+<a href="Controlador?operacion=modCategorias">Modificar categorias</a><br>
+<a href="Controlador?operacion=modPistas">Modificar pistas</a><br>
+
 
 
 </center>

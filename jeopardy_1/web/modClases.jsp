@@ -1,23 +1,16 @@
 <%-- 
-    Document   : perfil
-    Created on : Apr 24, 2015, 10:58:06 AM
+    Document   : modClases
+    Created on : Apr 28, 2015, 12:45:50 AM
     Author     : dgm1
 --%>
 
-<%@page import="java.sql.*"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<jsp:useBean id = "datos" scope= "request"
-   class = "juego.DBhandler" />
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Jeopardy | Clases</title>
-        <script src="js/jquery-1.11.1.js"></script>
-        <script src="js/main.js"></script>
-        <link rel="stylesheet" type="textcss" href="main.css">
-      
+        <title>JSP Page</title>
     </head>
     <body>
         <%@ page import="juego.Categoria" %>
@@ -51,7 +44,7 @@
                     </td>
                     
                     
-                <td><form name="forma" method="POST" action="Controlador?operacion=usarClase"><input type="hidden" name="nomClase" value="<%=strclase%>"><input type="submit" name="Submit" value="-->" ></button></form></td>
+                <td><form name="forma" method="POST" action="Controlador?operacion=usarClase"><input type="hidden" name="nomClase" value="<%=strclase%>"></form></td>
                     
                 </tr>
                 

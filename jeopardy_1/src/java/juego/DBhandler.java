@@ -138,9 +138,9 @@ public class DBhandler {
         try{
             Statement statement = connection.createStatement();
             
-            ResultSet resultsC = statement.executeQuery("SELECT * FROM categorias JOIN pistas ON categorias.categoria = pistas.categoria");
+            ResultSet resultsC = statement.executeQuery("SELECT * FROM pistas");
             while (resultsC.next()) {
-                    Pista aux = new Pista(resultsC.getString(1),resultsC.getString(2),resultsC.getString(3),resultsC.getInt(4));
+                    Pista aux = new Pista(resultsC.getString(4),resultsC.getString(1),resultsC.getString(2),resultsC.getInt(3));
                     
                     System.out.println(aux.getPista());
                     
@@ -163,14 +163,10 @@ public class DBhandler {
         try{
             Statement statement = connection.createStatement();
             
-            ResultSet resultsT = statement.executeQuery("SELECT * FROM clases");
+            ResultSet resultsT = statement.executeQuery("SELECT * FROM categorias");
             while (resultsT.next()) {
-                String clase = resultsT.getString(1);
-                ResultSet resultsC = statement.executeQuery("SELECT * FROM categorias WHERE clase='"+clase+"'");
-                while(resultsC.next()){
-                    Categoria aux = new Categoria(resultsC.getString(1), clase);
-                    categorias.add(aux);
-                }
+                Categoria aux = new Categoria(resultsT.getString(1), resultsT.getString(2));
+                categorias.add(aux);
             }
             statement.close();
         } catch (SQLException ex) {
