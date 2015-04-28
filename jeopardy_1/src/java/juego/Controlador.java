@@ -22,6 +22,7 @@ import javax.servlet.http.HttpSession;
 import javax.mail.*;
 import javax.mail.internet.*;
 import javax.activation.*;
+import javax.servlet.http.Cookie;
 
 /**
  *
@@ -57,6 +58,12 @@ public class Controlador extends HttpServlet {
                     url="/inicio.jsp";
                     HttpSession session = request.getSession();
                     session.setAttribute("usuario", usuario);
+                    Cookie userIdCookie = new Cookie("userIdCookie", user);
+                    userIdCookie.setMaxAge(60*60*24*365*2);
+                                                     //set the age to 2 years
+                    userIdCookie.setPath("/");
+                                    // allow access by the entire application
+                    response.addCookie(userIdCookie);
                 }
                 else {
                     HttpSession session = request.getSession();
@@ -70,6 +77,36 @@ public class Controlador extends HttpServlet {
                 session.setAttribute("intentos", intentos);
                 url="/login.jsp"; 
             }
+        }
+        
+        if(op.equals("logout")) {
+            url="/login.jsp";
+            Cookie[] cookies = request.getCookies();
+            for (int i=0; i<cookies.length; i++)
+            {
+                Cookie cookie = cookies[i];
+                cookie.setMaxAge(0); //delete the cookie
+                cookie.setPath("/");
+                          //allow the entire application to access it
+                response.addCookie(cookie);
+            }
+            HttpSession session = request.getSession();
+            session.invalidate();
+        }
+        
+        if(op.equals("verJuegos")) {
+            Cookie[] cookies = request.getCookies(); 
+            String cookieName = "userIdCookie";
+            String cookieValue = "";
+            for (int i=0; i<cookies.length; i++)
+            {
+                Cookie cookie = cookies[i];
+                if (cookieName.equals(cookie.getName()))
+                    cookieValue = cookie.getValue();
+            }
+            ArrayList juegos = DBhandler.getJuegos(cookieValue);
+            request.setAttribute("juegos", juegos);
+            url="/verJuegos.jsp";
         }
         
         if(op.equals("crearCuenta")) {
@@ -105,6 +142,12 @@ public class Controlador extends HttpServlet {
             if(validoF){
                 url="/inicio.jsp";
                 session.setAttribute("usuario", usuario);
+                Cookie userIdCookie = new Cookie("userIdCookie", usuario.getUser());
+                userIdCookie.setMaxAge(60*60*24*365*2);
+                                                 //set the age to 2 years
+                userIdCookie.setPath("/");
+                                // allow access by the entire application
+                response.addCookie(userIdCookie);
             }
             else
                 url="/cambiarPass.jsp";

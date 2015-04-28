@@ -21,7 +21,7 @@
 
 <form name="forma" method="POST" action="Controlador?operacion=cambiar">
             
-           Modifique su contraseña : <input type="text" name="pN"><br/>
+           Modifique su contraseña : <input type="password" name="pN"><br/>
 <br/>            
             <input type="submit" name="Submit" value="Cambiar">
             <input type="reset" value="Reset">
