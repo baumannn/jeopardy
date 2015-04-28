@@ -23,6 +23,8 @@
         <%@ page import="juego.Categoria" %>
         <%@ page import="juego.Pista" %>
         
+        
+      
         <div id="center">
             
             <h3>Agrega una categoria</h3>
@@ -61,7 +63,42 @@
                 </tr>
                 </form>                 
             </table>
+                    
+                    
+            Categorias actuales:
             
+            <%
+            
+            
+            ArrayList catsPerfil = perfil.getCategorias();
+            
+            for(int i = 0; i < catsPerfil.size(); i++){
+                
+                
+                %>
+            
+            
+                <span><%=catsPerfil.get(i)%></span>
+            
+            
+            
+            
+            <%
+                
+                
+                
+            }
+            
+            
+            
+            
+            %>
+            
+                    
+                    
+                    
+                    
+                    
             <script>
                 var categoria;
 
