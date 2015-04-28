@@ -102,7 +102,7 @@
                             String pista = pistas.get(j).getPista();
                             String respuesta = pistas.get(j).getRespuesta();
                             String valor = "" + pistas.get(j).getValor();
-                            String str = pista + "|" + respuesta + "|" + valor;
+                            String str = pista + "%" + respuesta + "%" + valor;
                         %>
                         
                             <tr data-cat="<%=pistas.get(j).getCategoria()%>">
@@ -123,7 +123,21 @@
                 
             </div>
                 
-                <span id="epicstring"></span>
+                
+                <br>
+                
+                <div id="players">
+                    <input type="text" id="playername" value="nombre"/> 
+                    <button id="addplayer">Agregar usuario</button>
+                    <span></span>
+                </div>
+                
+                <br>
+                
+                <form method="POST" action="juego.jsp" id="formsubmit">  <input type="hidden" name="clase"/> <input type="hidden" name="categorias"/> <input type="hidden" name="pistas"/> <input type="hidden" name="jugadores"/> </form>
+                <button id="start">comenzar</button>
+                
+                
                 
                 
                 
@@ -135,12 +149,21 @@
             var clase;
             var cats;
             var catsarr = [];
+            var catsout;
             
             var parr0 = [];
             var parr1 = [];
             var parr2 = [];
             var parr3 = [];
             var parr4 = [];
+            
+            var pstr0 = "";
+            var pstr1 = "";
+            var pstr2 = "";
+            var pstr3 = "";
+            var pstr4 = "";
+            
+            var jugadores = "";
             
             $(document).ready(function() {
                 
@@ -150,7 +173,9 @@
                 $(".actcats").hide();
                 $("#getpistas").hide();
                 $("#preguntas").hide();
+                $("#start").hide();
                 
+                $("#players").hide();
                 
                 $(".usarclase").on("click", function(){
                     
@@ -255,7 +280,7 @@
                     $(".actcats").hide();
                     $("#getpistas").hide();
                     
-                    var catsout = "";
+                    catsout = "";
                     
                     for(var i = 0; i < catsarr.length; i++){
                         
@@ -298,41 +323,95 @@
                     
                     var str = $(this).data("string");
                     var pos = 0;
-
+                    var flag = 0;
+                    
+                    
                     switch($(this).data("num")){
-                       
+                        
                         case 0:
-                            pos = parr0.length;
-                            parr0[parr0.length] = str;
+                            if(parr0.length != 5){
+                                flag = 1;
+                            }
                             break;  
                         case 1:
-                            pos = parr1.length;
-                            parr1[parr1.length] = str;
+                            if(parr1.length != 5){
+                                flag = 1;
+                            }
                             break;  
                         case 2:
-                            pos = parr2.length;
-                            parr2[parr2.length] = str;
+                            if(parr2.length != 5){
+                                flag = 1;
+                            }
                             break;  
                         case 3:
-                            pos = parr3.length;
-                            parr3[parr3.length] = str;
+                            if(parr3.length != 5){
+                                flag = 1;
+                            }
                             break;  
                         case 4:
-                            pos = parr4.length;
-                            parr4[parr4.length] = str;
-                            break;
+                            if(parr4.length != 5){
+                                flag = 1;
+                            }
+                            break;  
                         default:
                             break;
                         
                     }
                     
-                    $(this).parent().html("<button class='rempista' data-pos='" + pos + "' data-num='" + $(this).data("num") + "' data-val='" + $(this).data("val") + "' data-string='" + str + "'>eliminar</button>");
-                    updatePistas();
+                    
+                    if(flag==1){
+
+                        switch($(this).data("num")){
+
+                            case 0:
+                                pos = parr0.length;
+                                parr0[parr0.length] = str;
+                                break;  
+                            case 1:
+                                pos = parr1.length;
+                                parr1[parr1.length] = str;
+                                break;  
+                            case 2:
+                                pos = parr2.length;
+                                parr2[parr2.length] = str;
+                                break;  
+                            case 3:
+                                pos = parr3.length;
+                                parr3[parr3.length] = str;
+                                break;  
+                            case 4:
+                                pos = parr4.length;
+                                parr4[parr4.length] = str;
+                                break;
+                            default:
+                                break;
+
+                        }
+
+                        $(this).parent().html("<button class='rempista' data-pos='" + pos + "' data-num='" + $(this).data("num") + "' data-val='" + $(this).data("val") + "' data-string='" + str + "'>eliminar</button>");
+                        updatePistas();
+
+
+
+                        if(parr0.length + parr1.length + parr2.length + parr3.length + parr4.length == 25){
+                            $("#start").show();
+                            $("#players").show();
+                        }
+
+
+
+
+
+
+
+                    }
                     
                 });
                 
                 
                 $(document).on("click", ".rempista", function(){
+                    
+                    $("#start").hide();
                     
                     
                     var pos = parseInt($(this).data("pos"));
@@ -377,37 +456,113 @@
                     
                     var es = "";
                     
+                    pstr0 = "";
+                    pstr1 = "";
+                    pstr2 = "";
+                    pstr3 = "";
+                    pstr4 = "";
+                    
+                    
                     for(var i = 0; i < parr0.length; i++){
-                        es+=parr0[i] + "@";
+                        if(i == 4){
+                            pstr0+=parr0[i]
+                        }else{
+                            pstr0+=parr0[i] + "@";
+                        }
                     }
                     
                     for(var i = 0; i < parr1.length; i++){
-                        es+=parr1[i] + "@";
+                        if(i == 4){
+                            pstr1+=parr1[i]
+                        }else{
+                            pstr1+=parr1[i] + "@";
+                        }
                     }
                     
                     for(var i = 0; i < parr2.length; i++){
-                        es+=parr2[i] + "@";
+                        if(i == 4){
+                            pstr2+=parr2[i]
+                        }else{
+                            pstr2+=parr2[i] + "@";
+                        }
                     }
                     
                     for(var i = 0; i < parr3.length; i++){
-                        es+=parr3[i] + "@";
+                        if(i == 4){
+                            pstr3+=parr3[i]
+                        }else{
+                            pstr3+=parr3[i] + "@";
+                        }
                     }
                     
                     for(var i = 0; i < parr4.length; i++){
-                        es+=parr4[i] + "@";
+                        if(i == 4){
+                            pstr4+=parr4[i]
+                        }else{
+                            pstr4+=parr4[i] + "@";
+                        }
                     }
                     
                     
+                    es = pstr0 + "&" + pstr1 + "&" + pstr2 + "&" + pstr3 + "&" + pstr4; 
                     
                     
                     
-                    
-                    $("#epicstring").html(es);
+//                    $("#epicstring").html(es);
                 }
                 
                 
-               
+                $("#addplayer").on("click", function(){
+                    
+                    if(jugadores == "")
+                        jugadores += $("#playername").val();
+                    else
+                        jugadores += ", " + $("#playername").val();
+                    
+                    
+                    $("#players span").html("Jugadores: " + jugadores);
+                    
+                    
+                })
                 
+                
+                $("#start").on("click",function(){
+                    
+                    $("#formsubmit input").each(function(index){
+                        
+                        switch(index){
+                            
+                            case 0:
+                                $(this).val(clase);
+                                break;
+                            case 1:
+                                $(this).val(catsout);
+                                break;
+                            case 2:
+                                $(this).val(pstr0 + "&" + pstr1 + "&" + pstr2 + "&" + pstr3 + "&" + pstr4);
+                                break;
+                                
+                            case 3:
+                                $(this).val(jugadores);
+                                break;
+                            default:
+                                break;
+                            
+                        }
+                        
+                        
+                    });
+                    
+                    $("#formsubmit").submit();
+                    
+//                    $.post( "juego.jsp", { clase: clase, categorias: catsout, categorias: pstr0 + "&" + pstr1 + "&" + pstr2 + "&" + pstr3 + "&" + pstr4 } );
+                    
+                    
+                    
+                });
+                
+                
+
                 
                 
             });
